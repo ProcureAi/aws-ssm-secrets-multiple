@@ -1,0 +1,36 @@
+{
+  "name": "aws-ssm-secrets-multiple",
+  "version": "1.0.0",
+  "description": "JavaScript Github Action to get multiple secrets from AWS Systems Manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build src/index.js -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProcureAi/aws-ssm-secrets-multiple.git"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "JavaScript",
+    "Webhook",
+    "AWS SSM"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ProcureAi/aws-ssm-secrets-multiple/issues"
+  },
+  "homepage": "https://github.com/ProcureAi/aws-ssm-secrets-multiple#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "aws-sdk": "^2.848.0"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.22.3",
+    "prettier": "^2.2.1"
+  }
+}

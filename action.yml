@@ -1,0 +1,14 @@
+name: 'AWS SSM Secrest Multiple'
+description: 'JavaScript Github Action to get multiple secrets from AWS Systems Manager'
+author: 'Martin Rädlinger'
+branding:
+  icon: 'key'
+  color: 'white'
+inputs:
+  SSM_PARAMETERS:
+    required: true
+    default: ''
+    description: list of parameters to get
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
