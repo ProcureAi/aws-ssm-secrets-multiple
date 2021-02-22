@@ -15,9 +15,18 @@ This actions gets multiple parameters from AWS System Manager and maps them to g
 ## Example usage
 
 ```yaml
-uses: ProcureAi/aws-ssm-secrets-multiple@v1.0.0
-with:
-  SSM_PARAMETERS: |
-    FOO=/app/production/foo,
-    BAR=/app/production/bar,
+- uses: aws-actions/configure-aws-credentials@v1
+  with:
+    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    aws-region: ${{ secrets.AWS_REGION }}
+
+- uses: ProcureAi/aws-ssm-secrets-multiple@v1.0.0
+  with:
+    SSM_PARAMETERS: |
+      FOO=/app/production/foo,
+      BAR=/app/production/bar,
+
+- run: |
+    echo "this is your secret: $FOO"
 ```

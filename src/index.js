@@ -32,10 +32,7 @@ const SSM = require('aws-sdk/clients/ssm');
         core.warning(`Secret ${envKey} seems to be empty`);
       }
 
-      console.log('SECRET', secret);
-
       core.setSecret(secret || '');
-
       core.exportVariable(envKey, secret);
       core.info(`Secret ${envKey} injected`);
     }

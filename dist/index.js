@@ -11574,10 +11574,7 @@ const SSM = __webpack_require__(883);
         core.warning(`Secret ${envKey} seems to be empty`);
       }
 
-      console.log('SECRET', secret);
-
       core.setSecret(secret || '');
-
       core.exportVariable(envKey, secret);
       core.info(`Secret ${envKey} injected`);
     }
