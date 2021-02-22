@@ -11543,61 +11543,51 @@ module.exports = require("util");
 const core = __webpack_require__(470);
 const SSM = __webpack_require__(883);
 
-
 (async () => {
   const ssmParams = core.getInput('SSM_PARAMETERS', { required: true });
 
   core.startGroup('Injecting secret environment variables');
 
-  console.log(ssmParams);
+  const ssm = new SSM();
 
-  const regex = /(\w+)=\s*([^,\s*]*)/gi;
-  let match;
+  let result;
+  try {
+    const regex = /(\w+)=\s*([^,\s*]*)/gi;
+    let match;
+    const params = [];
 
-  while ((match = regex.exec(ssmParams)) !== null) {
-    console.log('FOUND', match[1], match[2]);
-    // expected output: "Found foo. Next starts at 9."
-    // expected output: "Found foo. Next starts at 19."
+    while ((match = regex.exec(ssmParams)) !== null) {
+      params.push({ envKey: match[1].toUpperCase(), ssmParam: match[2] });
+    }
+
+    for (const { envKey, ssmParam } of params) {
+      result = await ssm
+        .getParameter({
+          Name: ssmParam,
+          WithDecryption: true,
+        })
+        .promise();
+
+      const secret = result && result.Parameter && result.Parameter.Value;
+
+      if (!secret) {
+        core.warning(`Secret ${envKey} seems to be empty`);
+      }
+
+      console.log('SECRET', secret);
+
+      core.setSecret(secret || '');
+
+      core.exportVariable(envKey, secret);
+      core.info(`Secret ${envKey} injected`);
+    }
+  } catch (error) /* istanbul ignore next */ {
+    core.setFailed(error.message);
+    throw error;
   }
 
-
-  // const ssm = new SSM();
-
-  // let result;
-  // try {
-  //   result = await ssm
-  //     .getParameter({
-  //       Name: actionParam.ssmParameter,
-  //       WithDecryption: true, // NOTE: this flag is ignored for String and StringList parameter types
-  //     })
-  //     .promise();
-  // } catch (error) /* istanbul ignore next */ {
-  //   core.setFailed(error.message);
-  //   throw error;
-  // }
-  //
-  // const envVar = actionParam.envVariable.toUpperCase();
-  // const secret = result?.Parameter?.Value;
-  //
-  // if (!secret) {
-  //   core.warning(`Secret value for environment variable ${envVar} appears to be empty`);
-  // }
-  //
-  // core.setSecret(secret || '');
-  // core.exportVariable(envVar, secret);
-  // core.info(`Successfully set secret environment variable: ${envVar}`);
-
   core.endGroup();
-
-
-
-
-
 })();
-
-
-
-
 
 
 /***/ }),

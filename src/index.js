@@ -26,7 +26,7 @@ const SSM = require('aws-sdk/clients/ssm');
         })
         .promise();
 
-      const secret = result?.Parameter?.Value;
+      const secret = result && result.Parameter && result.Parameter.Value;
 
       if (!secret) {
         core.warning(`Secret ${envKey} seems to be empty`);
@@ -34,7 +34,7 @@ const SSM = require('aws-sdk/clients/ssm');
 
       console.log('SECRET', secret);
 
-      // core.setSecret(secret || '');
+      core.setSecret(secret || '');
 
       core.exportVariable(envKey, secret);
       core.info(`Secret ${envKey} injected`);
