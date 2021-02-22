@@ -1,4 +1,4 @@
-name: 'AWS SSM Secrest Multiple'
+name: 'AWS SSM Secrets Multiple'
 description: 'JavaScript Github Action to get multiple secrets from AWS Systems Manager'
 author: 'Martin Rädlinger'
 branding:
