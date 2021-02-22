@@ -34,7 +34,7 @@ const SSM = require('aws-sdk/clients/ssm');
 
       console.log('SECRET', secret);
 
-      core.setSecret(secret || '');
+      // core.setSecret(secret || '');
 
       core.exportVariable(envKey, secret);
       core.info(`Secret ${envKey} injected`);
